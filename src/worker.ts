@@ -13,6 +13,18 @@ import { init, getGlobals } from '@settings';
 export default {
 	async fetch(request: Request, env: Env) {
 		try {
+			return await handleRequest(request, env);
+		} catch (error: any) {
+			// Last-resort diagnostics: never let an exception escape as Cloudflare Error 1101
+			const detail = `Hamrah Panel v${VERSION} error:\n${error?.stack || error?.message || String(error)}`;
+			return new Response(detail, { status: 500, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+		}
+	}
+}
+
+async function handleRequest(request: Request, env: Env): Promise<Response> {
+	{
+		try {
 			init(request, env);
 			if (request.headers.get('Upgrade') === 'websocket') return await handleWebsocket(request);
 			const { securePath, pathname } = getGlobals();
@@ -44,7 +56,7 @@ export default {
 					return await fallback(request);
 			}
 		} catch (error) {
-			return renderError(error);
+			return await renderError(error);
 		}
 	}
 }

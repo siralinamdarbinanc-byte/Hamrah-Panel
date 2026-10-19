@@ -16,14 +16,15 @@
 2. در تب Actions، workflow با نام **Build and Release** را اجرا کن (`workflow_dispatch`). فایل `worker.js` در Releases ساخته می‌شود.
 
 ## نصب (مهم)
-این نسخه فقط با Wizard نصب می‌شود (نصب دستی کار نمی‌کند). Wizard رسمی را بگیر، ولی قبل از اجرا فایل `worker.js` کنار برنامه را با فایل `worker.js` از Releases **همین مخزن** عوض کن. از آن به بعد دکمه‌ی Update پنل هم از مخزن خودت می‌خواند.
+این نسخه فقط با Wizard نصب می‌شود (نصب دستی کار نمی‌کند). اسکریپت زیر Wizard رسمی را می‌گیرد و `worker.js` را از Releases **همین مخزن** می‌خواند:
 
 ```bash
-# مثال (لینوکس/Termux): بعد از نصب Wizard
-curl -fsSL -o ~/bpb-wizard/worker.js \
-  https://github.com/siralinamdarbinanc-byte/Hamrah-Panel/releases/latest/download/worker.js
+bash <(curl -fsSL https://raw.githubusercontent.com/siralinamdarbinanc-byte/Hamrah-Panel/main/install.sh)
 ```
-(مسیر پوشه‌ی نصب Wizard را با مسیر واقعی عوض کن.)
+
+- اگر `curl` خطای TLS داد، اینترنت/VPN را عوض کن و دوباره بزن (اسکریپت خودش ۵ بار تلاش می‌کند).
+- اگر دانلود از گیتهاب ممکن نیست: `wizard` و `worker.js` را دستی کنار هم در یک پوشه بگذار و `LAUNCHED_BY_SCRIPT=1 ./wizard` را اجرا کن.
+- بعد از نصب، دکمه‌ی Update پنل از Releases همین مخزن آپدیت می‌گیرد.
 
 ## توسعه
 ```bash

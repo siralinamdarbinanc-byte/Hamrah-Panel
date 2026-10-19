@@ -14,3 +14,6 @@
 !NAT64Prefixes.md
 !docs
 !docs/**
+!LICENSE
+!install.sh
+!package-lock.json
